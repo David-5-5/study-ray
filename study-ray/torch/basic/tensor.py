@@ -36,3 +36,29 @@ print(f"Device tensor is stored on: {tensor.device}")
 device = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else 'cpu'
 tensor = tensor.to(device)
 print(f"Device tensor is stored on: {tensor.device}")
+
+# 类似 NumPy 的标准索引和切片
+tensor = torch.ones(4, 4)
+tensor[:, 1] = 0
+print(tensor)
+
+t1 = torch.cat([tensor, tensor, tensor], dim=1)
+print(t1)
+
+# 张量乘法 This computes the element-wise product
+print(f"tensor.mul(tensor) \n {tensor.mul(tensor)} \n")
+# Alternative syntax
+print(f"tensor*tensor \n {tensor*tensor} \n")
+
+# 张量矩阵乘法
+print(f"tensor.matmul(tensor) \n {tensor.matmul(tensor)} \n")
+# Alternative syntax
+print(f"tensor @ tensor \n {tensor @ tensor} \n")
+
+# 原地操作，后缀为 _
+print(tensor, "\n")
+tensor.add_(5) # t1 = tensor.add(5) # tensor 不变
+print(tensor, "\n")
+
+
+
