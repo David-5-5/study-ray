@@ -41,3 +41,23 @@ for i in range(1, cols * rows + 1):
     plt.imshow(img.squeeze(), cmap="gray")
 
 plt.show()
+
+
+
+from torch.utils.data import DataLoader
+
+train_dataloader = DataLoader(training_data, batch_size=64, shuffle=True)
+test_dataloader = DataLoader(test_data, batch_size=64, shuffle=True)
+
+# Display image and label
+train_feature, train_label = next(iter(train_dataloader))
+print(f"Feature batch shape: {train_feature.size()}")
+print(f"Lable batch shape: {train_label.size()}")
+
+img = train_feature[0].squeeze()
+label = train_label[0]
+
+plt.imshow(img, cmap="gray")
+plt.show()
+print(f"Label: {label}")
+
