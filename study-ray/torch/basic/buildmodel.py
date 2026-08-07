@@ -1,10 +1,5 @@
-import os
 import torch
 from torch import nn
-
-device = torch.accelerator.current_accelerator().type() if torch.accelerator.is_available() else "cpu"
-print(f"Using {device} device")
-
 
 class NeuralNetwork(nn.Module):
     def __init__(self):
@@ -23,13 +18,17 @@ class NeuralNetwork(nn.Module):
         logits = self.linear_relu_stack(x)
         return logits
 
-model = NeuralNetwork().to(device)
-print(model)
+if __name__ == "__main__":
+    device = torch.accelerator.current_accelerator().type() if torch.accelerator.is_available() else "cpu"
+    print(f"Using {device} device")
 
-X = torch.rand(1, 28, 28, device=device)
-logits = model(X)
+    model = NeuralNetwork().to(device)
+    print(model)
 
-pred_probab = nn.Softmax(dim=1)(logits)
-y_pred = pred_probab.argmax(1)
-print(f"Predicted class: {y_pred}")
+    X = torch.rand(1, 28, 28, device=device)
+    logits = model(X)
+
+    pred_probab = nn.Softmax(dim=1)(logits)
+    y_pred = pred_probab.argmax(1)
+    print(f"Predicted class: {y_pred}")
 
